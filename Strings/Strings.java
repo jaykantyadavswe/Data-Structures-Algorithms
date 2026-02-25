@@ -55,5 +55,12 @@ public class Strings {
         }else{
             System.out.println("Strings are not equal");
         }
+
+        StringBuilder sb = new StringBuilder("");
+        for(char ch='a'; ch<='z'; ch++){
+            sb.append(ch);
+        }
+
+        System.out.println(sb);
     }
 }
