@@ -117,8 +117,9 @@ public class StringsQS {
             chars[j++] = chars[i];
 
             if (count > 1) {
+                // convert number -> String 
                 String countStr = String.valueOf(count);
-                for (char c : countStr.toCharArray()) {
+                for (char c : countStr.toCharArray()) { // string to char arrays then one by one store in char array modifie like - 10 -> to place fill - '1', '0'
                     chars[j++] = c;
                 }
             }
@@ -153,10 +154,19 @@ public class StringsQS {
 
         String s = "aaabbcdd";
         // System.out.println(strCompression(s));
-        char ch[] = { 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
+        char ch[] = { 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
         System.out.println(compress(ch));
 
-        
+       /*  String countStr = "1258";
+        for(char c : countStr.toCharArray()){
+            System.out.println(c);
+        } */
 
+    }
+
+    public static void printString(char ch[]){
+        for(int i=0; i<ch.length; i++){
+            System.out.print(ch[i] + " ");
+        }
     }
 }
