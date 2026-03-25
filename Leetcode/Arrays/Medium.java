@@ -1,14 +1,5 @@
 package DSA.Leetcode.Arrays;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import DSA.Leetcode.Strings.easy;
+import java.util.*;
 
 public class Medium {
     // 75. Sort Colors
@@ -321,6 +312,67 @@ public class Medium {
         }
     }
 
+    // 56. Merge Intervals
+    public static int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> (a[0]-b[0]));
+
+        LinkedList<int[]> ans = new LinkedList<>();
+        for(int[]interval : intervals){
+            if(ans.isEmpty() || ans.getLast()[1]<interval[0]){
+                ans.add(interval);
+            }else{
+                ans.getLast()[1] = Math.max(ans.getLast()[1], interval[1]);
+            }
+        }
+
+        return ans.toArray(new int[ans.size()][2]);
+    }
+
+    // 912. Sort an Array (Merge Sort)
+    public static int[] sortArray(int[] nums) {
+        mergeSort(nums, 0, nums.length-1);
+        return nums;
+    }
+
+    private static void mergeSort(int nums[], int si, int ei){
+        if(si >= ei){
+            return;
+        }
+
+        int mid = si + (ei - si) / 2;
+        mergeSort(nums, si, mid);
+        mergeSort(nums, mid+1, ei);
+        merge(nums, si, mid, ei);
+    }
+
+    private static void merge(int nums[], int si, int mid, int ei){
+        int temp[] = new int[ei-si+1];
+        int i = si;
+        int j = mid+1;
+        int k = 0;
+
+        while (i <= mid && j <= ei) {
+            if(nums[i] <= nums[j]){
+                temp[k++] = nums[i++];
+            }else{
+                temp[k++] = nums[j++];
+            }
+        }
+
+        while (i <= mid) {
+            temp[k++] = nums[i++];
+        }
+
+        while (j <= ei) {
+            temp[k++] = nums[j++];
+        }
+
+        for( k=0, i=si; k<temp.length; k++, i++){
+            nums[i] = temp[k];
+        }
+        
+    }
+
     public static void main(String[] args) {
         // int nums[] = { 1, 0, -1, 0, -2, 2 };
         // int nums[] = { 2, 2, 2, 2, 2 };
@@ -331,15 +383,36 @@ public class Medium {
         // System.out.println(fourSum3(nums, -294967296));
         // System.out.println(fourSum4(nums, 0));
 
-        int nums[] = {1, 1, 5};
-        nextPermutation(nums);
+        /* int nums[] = {1, 1, 5};
+        nextPermutation(nums); */
+
+        /* int merge[][] = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        int ans[][] = merge(merge);
+        print2DArr(ans); */
+
+        // printArr(nums);
+
+        int nums[] = {5, 3, 2, 1};
+        sortArray(nums);
         printArr(nums);
 
     }
 
+
+
     public static void printArr(int nums[]) {
         for (int i = 0; i < nums.length; i++) {
             System.out.print(nums[i] + " ");
+        }
+
+        System.out.println();
+    }
+
+    public static void print2DArr(int nums[][]) {
+        for (int i = 0; i < nums.length-1; i++) {
+            for(int j=0; j<nums.length-1; j++){
+                System.out.print(nums[i][j]);
+            }
         }
 
         System.out.println();
