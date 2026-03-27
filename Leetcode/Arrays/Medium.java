@@ -1,4 +1,5 @@
 package DSA.Leetcode.Arrays;
+
 import java.util.*;
 
 public class Medium {
@@ -274,23 +275,23 @@ public class Medium {
     // 31. Next Permutation -> TC : O(n) & SC: O(1)
     public static void nextPermutation(int[] nums) {
         int n = nums.length;
-        int pivot =-1;
+        int pivot = -1;
         // find pivot
-        for(int i=n-2; i>=0; i--){
-            if(nums[i] < nums[i+1]){
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums[i] < nums[i + 1]) {
                 pivot = i;
                 break;
             }
         }
 
-        if(pivot == -1){
-            reverseArr(nums, 0, n-1); //in place changes
+        if (pivot == -1) {
+            reverseArr(nums, 0, n - 1); // in place changes
             return;
         }
 
         // 2nd step: next larger element
-        for(int i=n-1; i>pivot; i--){
-            if(nums[i] > nums[pivot]){
+        for (int i = n - 1; i > pivot; i--) {
+            if (nums[i] > nums[pivot]) {
                 int temp = nums[pivot];
                 nums[pivot] = nums[i];
                 nums[i] = temp;
@@ -298,11 +299,11 @@ public class Medium {
             }
         }
 
-        //  3rd step : reverse (piv+1 to n-1)
-        reverseArr(nums, pivot+1, n-1);
+        // 3rd step : reverse (piv+1 to n-1)
+        reverseArr(nums, pivot + 1, n - 1);
     }
 
-    public static void reverseArr(int nums[], int i, int j){
+    public static void reverseArr(int nums[], int i, int j) {
         while (i < j) {
             int temp = nums[i];
             nums[i] = nums[j];
@@ -312,15 +313,30 @@ public class Medium {
         }
     }
 
+    // 53. Maximum Subarray -> using Kadan's Algorithm
+    public static int maxSubArray(int nums[]) {
+        int max = Integer.MIN_VALUE;
+        int currSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            currSum += nums[i];
+            max = Math.max(max, currSum);
+            if (currSum < 0) {
+                currSum = 0;
+            }
+        }
+
+        return max;
+    }
+
     // 56. Merge Intervals
     public static int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> (a[0]-b[0]));
+        Arrays.sort(intervals, (a, b) -> (a[0] - b[0]));
 
         LinkedList<int[]> ans = new LinkedList<>();
-        for(int[]interval : intervals){
-            if(ans.isEmpty() || ans.getLast()[1]<interval[0]){
+        for (int[] interval : intervals) {
+            if (ans.isEmpty() || ans.getLast()[1] < interval[0]) {
                 ans.add(interval);
-            }else{
+            } else {
                 ans.getLast()[1] = Math.max(ans.getLast()[1], interval[1]);
             }
         }
@@ -330,31 +346,31 @@ public class Medium {
 
     // 912. Sort an Array (Merge Sort)
     public static int[] sortArray(int[] nums) {
-        mergeSort(nums, 0, nums.length-1);
+        mergeSort(nums, 0, nums.length - 1);
         return nums;
     }
 
-    private static void mergeSort(int nums[], int si, int ei){
-        if(si >= ei){
+    private static void mergeSort(int nums[], int si, int ei) {
+        if (si >= ei) {
             return;
         }
 
         int mid = si + (ei - si) / 2;
         mergeSort(nums, si, mid);
-        mergeSort(nums, mid+1, ei);
+        mergeSort(nums, mid + 1, ei);
         merge(nums, si, mid, ei);
     }
 
-    private static void merge(int nums[], int si, int mid, int ei){
-        int temp[] = new int[ei-si+1];
+    private static void merge(int nums[], int si, int mid, int ei) {
+        int temp[] = new int[ei - si + 1];
         int i = si;
-        int j = mid+1;
+        int j = mid + 1;
         int k = 0;
 
         while (i <= mid && j <= ei) {
-            if(nums[i] <= nums[j]){
+            if (nums[i] <= nums[j]) {
                 temp[k++] = nums[i++];
-            }else{
+            } else {
                 temp[k++] = nums[j++];
             }
         }
@@ -367,38 +383,15 @@ public class Medium {
             temp[k++] = nums[j++];
         }
 
-        for( k=0, i=si; k<temp.length; k++, i++){
+        for (k = 0, i = si; k < temp.length; k++, i++) {
             nums[i] = temp[k];
         }
-        
+
     }
 
     public static void main(String[] args) {
-        // int nums[] = { 1, 0, -1, 0, -2, 2 };
-        // int nums[] = { 2, 2, 2, 2, 2 };
-        // int nums[] = { 1000000000, 1000000000, 1000000000, 1000000000 };
-        // sortColors2(nums);
-        // printArr(nums);
-        // System.out.println(threeSum3(nums));
-        // System.out.println(fourSum3(nums, -294967296));
-        // System.out.println(fourSum4(nums, 0));
-
-        /* int nums[] = {1, 1, 5};
-        nextPermutation(nums); */
-
-        /* int merge[][] = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        int ans[][] = merge(merge);
-        print2DArr(ans); */
-
-        // printArr(nums);
-
-        int nums[] = {5, 3, 2, 1};
-        sortArray(nums);
-        printArr(nums);
-
+        
     }
-
-
 
     public static void printArr(int nums[]) {
         for (int i = 0; i < nums.length; i++) {
@@ -409,8 +402,8 @@ public class Medium {
     }
 
     public static void print2DArr(int nums[][]) {
-        for (int i = 0; i < nums.length-1; i++) {
-            for(int j=0; j<nums.length-1; j++){
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = 0; j < nums.length - 1; j++) {
                 System.out.print(nums[i][j]);
             }
         }
