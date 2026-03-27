@@ -377,7 +377,7 @@ public class LinkedList {
 
         // reverse 2nd Half
         Node curr = mid.next;
-        mid.next = null;
+        mid.next = null; //break half part
         Node prev = null;
         Node next;
 
@@ -396,7 +396,7 @@ public class LinkedList {
         while (left != null && right != null) {
             nextL = left.next;
             left.next = right;
-            
+
             nextR = right.next;
             right.next = nextL;
             // update
