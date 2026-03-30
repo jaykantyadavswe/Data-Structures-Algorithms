@@ -163,23 +163,10 @@ public class Easy {
         return ans;
     }
 
+    // 
+
     public static void main(String[] args) {
-        int grid[][] = { { 9, 1, 7 }, { 8, 9, 2 }, { 3, 4, 6 } };
-        // findMissingAndRepeatedValues2(grid);.
-
-        int nums1[] = { 1, 2, 3, 0, 0, 0 };
-        int nums2[] = { 2, 5, 6 };
-        int n = 3, m = 3;
-        // merge2(nums1, m, nums2, n);
-        // printArr(nums1);
-
-        int nums[] = { 2, 2, 1 };
-        // System.out.println(singleNumber2(nums));
-
-        int prices[] = { 7, 1, 5, 3, 6, 4 };
-        // System.out.println(buyAndSellStock(prices));
-
-        System.out.println(generate(5));
+        
     }
 
     public static void printArr(int arr[]) {

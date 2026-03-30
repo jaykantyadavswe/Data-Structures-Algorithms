@@ -389,8 +389,78 @@ public class Medium {
 
     }
 
-    public static void main(String[] args) {
+    // 287. Find the Duplicate Number
+    public static int findDuplicate(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > 1) {
+                return entry.getKey();
+            }
+        }
+
+        // According to LeetCode constraints, one duplicate exists.
+        return -1;
+    }
+
+    public static int findDuplicate2(int nums[]){
+        HashSet<Integer> set = new HashSet<>();
+        for(int i=0; i<nums.length; i++){
+            if(set.contains(nums[i])){
+                return nums[i];
+            }else{
+                set.add(nums[i]);
+            }
+        }
+
+        return -1;
+    }
+
+    public static int findDuplicate3(int nums[]){
+        boolean dup[] = new boolean[nums.length];
+        for(int x : nums){
+            if(dup[x]){
+                return x;
+            }else{
+                dup[x] = true;
+            }
+        }
+
+        return -1;
+    }
+
+    // Find Duplicate Number using Floyd’s Cycle Detection (Tortoise & Hare).
+    public static int findDuplicate4(int nums[]){
+        int slow = nums[0];
+        int fast = nums[0];
         
+        // Step 1: Find meeting point
+        while (true) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+
+            if(slow == fast){
+                break;
+            }
+        }
+
+        // find duplicate
+        fast = nums[0];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow;
+    }
+
+    public static void main(String[] args) {
+        int nums[] = {1, 3, 4, 2, 2};
+        System.out.println(findDuplicate4(nums));
     }
 
     public static void printArr(int nums[]) {
