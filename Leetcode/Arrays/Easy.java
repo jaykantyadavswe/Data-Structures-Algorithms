@@ -163,10 +163,69 @@ public class Easy {
         return ans;
     }
 
+    // 169. Majority Element -O(n^2)
+    public static int majorityElement(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            int count = 0;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[i] == nums[j]) {
+                    count++;
+                }
+            }
+
+            if (count > nums.length / 2) {
+                return nums[i];
+            }
+        }
+
+        return -1;
+    }
+
+    // Using HashMap -> O(N log n) + O(n) sc-> O(n)
+    public static int majorityElement2(int nums[]) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        for (Integer k : map.keySet()) {
+            if (map.get(k) > nums.length / 2) {
+                return k;
+            }
+        }
+
+        return -1;
+    }
+
+    // Moore's Voting Algorithm - O(n)
+    public static int majorityElement3(int nums[]) {
+        int ans = 0;
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (count == 0) {
+                ans = nums[i];
+                count++;
+            } else if (ans == nums[i]) {
+                count++;
+            } else {
+                count--;
+            }
+
+            if (count > nums.length / 2) {
+                return ans;
+            }
+        }
+
+        return ans;
+    }
+
     // 
 
     public static void main(String[] args) {
-        
+        // int nums[] = {2,2,1,1,1,2,2};
+        int nums[] = { 3, 2, 3 };
+        System.out.println(majorityElement3(nums));
     }
 
     public static void printArr(int arr[]) {

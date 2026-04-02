@@ -2,6 +2,8 @@ package DSA.Leetcode.Arrays;
 
 import java.util.*;
 
+import DSA.Arrays.Arr;
+
 public class Medium {
     // 75. Sort Colors
     public static void sortColors(int[] nums) {
@@ -407,12 +409,12 @@ public class Medium {
         return -1;
     }
 
-    public static int findDuplicate2(int nums[]){
+    public static int findDuplicate2(int nums[]) {
         HashSet<Integer> set = new HashSet<>();
-        for(int i=0; i<nums.length; i++){
-            if(set.contains(nums[i])){
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(nums[i])) {
                 return nums[i];
-            }else{
+            } else {
                 set.add(nums[i]);
             }
         }
@@ -420,12 +422,12 @@ public class Medium {
         return -1;
     }
 
-    public static int findDuplicate3(int nums[]){
+    public static int findDuplicate3(int nums[]) {
         boolean dup[] = new boolean[nums.length];
-        for(int x : nums){
-            if(dup[x]){
+        for (int x : nums) {
+            if (dup[x]) {
                 return x;
-            }else{
+            } else {
                 dup[x] = true;
             }
         }
@@ -434,16 +436,16 @@ public class Medium {
     }
 
     // Find Duplicate Number using Floyd’s Cycle Detection (Tortoise & Hare).
-    public static int findDuplicate4(int nums[]){
+    public static int findDuplicate4(int nums[]) {
         int slow = nums[0];
         int fast = nums[0];
-        
+
         // Step 1: Find meeting point
         while (true) {
             slow = nums[slow];
             fast = nums[nums[fast]];
 
-            if(slow == fast){
+            if (slow == fast) {
                 break;
             }
         }
@@ -458,9 +460,74 @@ public class Medium {
         return slow;
     }
 
+    // 229. Majority Element II
+    public static List<Integer> majorityElement(int[] nums) {
+        int n = nums.length;
+        ArrayList<Integer> ans = new ArrayList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+        }
+
+        for (Integer key : map.keySet()) {
+            if (map.get(key) > n / 3) {
+                ans.add(key);
+            }
+        }
+
+        return ans;
+    }
+
+    // moore's Voting Algorithms
+    public static List<Integer> majorityElement2(int nums[]) {
+        int n = nums.length;
+
+        int ele1 = Integer.MIN_VALUE;
+        int ele2 = Integer.MIN_VALUE;
+        int count1 = 0, count2 = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (count1 == 0 && ele2 != nums[i]) {
+                ele1 = nums[i];
+                count1++;
+            } else if (count2 == 0 && ele1 != nums[i]) {
+                ele2 = nums[i];
+                count2++;
+            } else if (nums[i] == ele1) {
+                count1++;
+            } else if (nums[i] == ele2) {
+                count2++;
+            } else {
+                count1--;
+                count2--;
+            }
+
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        count1 = 0;
+        count2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (ele1 == nums[i])
+                count1++;
+            if (ele2 == nums[i])
+                count2++;
+        }
+
+        int mini = (int)(n/3) + 1;
+
+        if (count1 >= mini)
+            ans.add(ele1);
+        if (count2 >= mini)
+            ans.add(ele2);
+
+        Collections.sort(ans);
+        return ans;
+    }
+
     public static void main(String[] args) {
-        int nums[] = {1, 3, 4, 2, 2};
-        System.out.println(findDuplicate4(nums));
+        int nums[] = { 2, 2, 1, 1, 1, 2, 2 };
+        System.out.println(majorityElement2(nums));
     }
 
     public static void printArr(int nums[]) {
