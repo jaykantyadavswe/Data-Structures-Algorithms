@@ -1,5 +1,7 @@
 package DSA.Strings;
 
+import java.util.*;
+
 public class StringsQS {
     // Check if a String is a Palindrome - O(n)
     public static boolean isPalindrome(String str) {
@@ -128,6 +130,49 @@ public class StringsQS {
         return j;
     }
 
+    // String Anagram - Unsing Sorting
+    public static boolean isAnagram(String s, String t){
+        if(s.length() != t.length()){
+            return false;
+        }
+        // string to char array
+        char chs[] = s.toCharArray();
+        char cht[] = t.toCharArray();
+        // Sort
+        Arrays.sort(chs);
+        Arrays.sort(cht);
+
+        // compare
+        for(int i=0; i<chs.length; i++){
+            if(chs[i] != cht[i]){
+                return false;
+            }
+        }
+
+        return true; 
+    }
+
+    // Using Frequency
+    public static boolean isAnagram2(String s, String t){
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        int freq[] = new int[26];
+        for(int i=0; i<s.length(); i++){
+            freq[s.charAt(i)-'a']++;
+            freq[t.charAt(i)-'a']--;
+        }
+
+        for(int num : freq){
+            if(num != 0){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
         String str = "madadm";
         // System.out.println(isPalindrome(str));
@@ -152,10 +197,14 @@ public class StringsQS {
          * System.out.println(toUpperCase(str3));
          */
 
-        String s = "aaabbcdd";
+        // String s = "aaabbcdd";
         // System.out.println(strCompression(s));
         char ch[] = { 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'b', 'b', 'c', 'c', 'c' };
-        System.out.println(compress(ch));
+        // System.out.println(compress(ch));
+
+        String s = "rat";
+        String t = "car";
+        System.out.println(isAnagram2(s, t));
 
        /*  String countStr = "1258";
         for(char c : countStr.toCharArray()){

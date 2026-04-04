@@ -259,7 +259,6 @@ public class medium {
         return false;
     }
 
-
     public static void main(String[] args) {
         int[][] matrix = {
                 { 1, 2, 3 },
@@ -278,8 +277,12 @@ public class medium {
          * }
          */
 
-        rotateImage3(matrix);
-        printMatrix(matrix);
+        // rotateImage3(matrix);
+        // printMatrix(matrix);
+
+        // System.out.println(uniquePaths(3, 7));
+        int nums[] = {1, 3, 2, 3, 1};
+        System.out.println(reversePairs(nums));
     }
 
     public static void printMatrix(int mat[][]) {

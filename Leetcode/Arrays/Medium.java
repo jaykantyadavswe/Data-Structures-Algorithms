@@ -525,6 +525,52 @@ public class Medium {
         return ans;
     }
 
+    // 128. Longest Consecutive Sequence
+    // Optimal Approch - O(1)
+    public static int longestConsecutive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for(int num : nums){
+            set.add(num);
+        }
+
+        int longest = 0;
+        for(int num : set){
+            if(!set.contains(num-1)){
+                int currNum = num;
+                int streak = 1;
+
+                while (set.contains(currNum + 1)) {
+                    currNum++;
+                    streak++;
+                }
+                longest = Math.max(streak, longest);
+            }
+        }
+
+        return longest;
+    }
+
+    // Better Approach
+    public static int longestConsecutives(int nums[]){
+        Arrays.sort(nums);
+        int lastSmaller = Integer.MIN_VALUE;
+        int count = 0;
+        int longest = 1;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]-1 == lastSmaller){
+                count += 1;
+                lastSmaller = nums[i];
+            }else if(nums[i] != lastSmaller){
+                count = 1;
+                lastSmaller = nums[i];
+            }
+
+            longest = Math.max(longest, count);
+        }
+
+        return longest;
+    }
+
     public static void main(String[] args) {
         int nums[] = { 2, 2, 1, 1, 1, 2, 2 };
         System.out.println(majorityElement2(nums));
