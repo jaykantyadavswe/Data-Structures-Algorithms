@@ -571,6 +571,37 @@ public class Medium {
         return longest;
     }
 
+    // 3889. Mirror Frequency Distance
+    public static int mirrorFrequency(String s) {
+        //create freq array
+        int freq[] = new int[128];
+        for(char c : s.toCharArray()){
+            freq[c]++;
+        }
+
+        // tracking visited or not
+        boolean visited[] = new boolean[128];
+        int ans = 0;
+
+        for(char ch : s.toCharArray()){
+            if(visited[ch]) continue; //skip if already visited once
+
+            int mirror;
+            if(Character.isDigit(ch)){ //Digit
+                mirror = (char) ('9' - (ch - '0'));
+            }else{ //Latter's
+                mirror = (char) ('z' - (ch - 'a'));
+            }
+
+            ans += Math.abs(freq[ch] - freq[mirror]);
+            visited[ch] = true;
+            visited[mirror] = true;
+        }
+
+        return ans;
+    }
+
+
     public static void main(String[] args) {
         int nums[] = { 2, 2, 1, 1, 1, 2, 2 };
         System.out.println(majorityElement2(nums));

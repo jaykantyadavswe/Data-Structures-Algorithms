@@ -17,6 +17,7 @@
 -   229.Majority Element II
 -   287.Find the Duplicate Number
 -   912.Sort an Array (Merge Sort)
+-   3889.Mirror Frequency Distance
 ---
     -> Easy Level
 -   1.Two Sum
