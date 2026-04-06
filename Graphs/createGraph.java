@@ -4,12 +4,12 @@ import java.util.*;
 public class createGraph {
     static class Edge {
         int src;
-        int dist;
+        int dest;
         int wt;
         
         public Edge(int s, int d, int w){
             this.src = s;
-            this.dist = d;
+            this.dest = d;
             this.wt = w;
         }
     }
