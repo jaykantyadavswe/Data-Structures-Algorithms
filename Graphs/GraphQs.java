@@ -1,7 +1,6 @@
-
 import java.util.ArrayList;
 
-public class DFS {
+public class GraphQs {
     static class Edge{
         int src;
         int dest;
@@ -42,19 +41,23 @@ public class DFS {
         graph[6].add(new Edge(6, 5, 1));
     }
 
-    public static void dfs(ArrayList<Edge> []graph, int curr, boolean visited[]){ //O(V+E)
-        // visit
-        System.out.print(curr + " ");
-        visited[curr] = true;
+    // Hash Path? - O(V+E)
+    public static boolean hasPath(ArrayList<Edge> graph [], int src, int dest, boolean visited[]){
+        if(src == dest){
+            return true;
+        }
 
-        for(int i=0; i<graph[curr].size(); i++){
-            Edge e = graph[curr].get(i);
-            if(!visited[e.dest]){
-                dfs(graph, e.dest, visited);
+        visited[src] = true;
+        for(int i=0; i<graph[src].size(); i++){
+            Edge e = graph[src].get(i);
+            //e.dest = neighbour
+            if(!visited[e.dest] && hasPath(graph, e.dest, dest, visited)){
+                return true;
             }
         }
-    }
 
+        return false;
+    }
     public static void main(String[] args) {
         /* 
                 1 --- 3
@@ -67,6 +70,7 @@ public class DFS {
         @SuppressWarnings("unchecked")
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph(graph);
-        dfs(graph, 0, new boolean[V]);
+        
+        System.out.println(hasPath(graph, 0, 5, new boolean[V]));
     }
 }

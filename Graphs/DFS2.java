@@ -1,7 +1,6 @@
-
 import java.util.ArrayList;
 
-public class DFS {
+public class DFS2 {
     static class Edge{
         int src;
         int dest;
@@ -42,7 +41,15 @@ public class DFS {
         graph[6].add(new Edge(6, 5, 1));
     }
 
-    public static void dfs(ArrayList<Edge> []graph, int curr, boolean visited[]){ //O(V+E)
+    // if graph component not connected each other so then different different component visited for we are created Util function
+    public static void dfs(ArrayList<Edge>[] graph){
+        boolean visited[] = new boolean[graph.length];
+        for(int i=0; i<graph.length; i++){
+            dfsUtil(graph, i, visited);
+        }
+    }
+
+    public static void dfsUtil(ArrayList<Edge> []graph, int curr, boolean visited[]){ //O(V+E)
         // visit
         System.out.print(curr + " ");
         visited[curr] = true;
@@ -50,7 +57,7 @@ public class DFS {
         for(int i=0; i<graph[curr].size(); i++){
             Edge e = graph[curr].get(i);
             if(!visited[e.dest]){
-                dfs(graph, e.dest, visited);
+                dfsUtil(graph, e.dest, visited);
             }
         }
     }
@@ -67,6 +74,6 @@ public class DFS {
         @SuppressWarnings("unchecked")
         ArrayList<Edge> graph[] = new ArrayList[V];
         createGraph(graph);
-        dfs(graph, 0, new boolean[V]);
+        dfsUtil(graph, 0, new boolean[V]);
     }
 }
