@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class CycleDetection {
+    // Undirected Graph
     static class Edge {
         int src;
         int dest;
