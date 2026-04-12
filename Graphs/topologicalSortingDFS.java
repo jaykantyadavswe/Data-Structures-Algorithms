@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class topologicalSorting {
+public class topologicalSortingDFS {
     static class Edge {
         int src;
         int dest;
@@ -26,6 +26,8 @@ public class topologicalSorting {
         graph[5].add(new Edge(5, 0));
         graph[5].add(new Edge(5, 2));
     }
+
+    // Using DFS
 
     // O(V+E)
     public static void topSort(ArrayList<Edge> [] graph){
