@@ -1,6 +1,8 @@
 package DSA.Leetcode.Arrays;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -250,7 +252,61 @@ public class Easy {
         return new int[]{-1, -1};
     }
 
-    // 
+    // 1752. Check if Array Is Sorted and Rotated
+    // brute force
+    public static boolean isSorted(int nums[]){
+        int sortedNums[] = nums.clone();
+        Arrays.sort(nums);
+
+        for(int i=0; i<nums.length; i++){
+            boolean isMath = true;
+            for(int idx=0; idx<nums.length; idx++){
+                if(nums[(i+idx)% nums.length] != sortedNums[idx]){
+                    isMath = false;
+                    break;
+                }
+            }
+
+            if(isMath){
+                return true;
+            }
+        }
+    }
+
+    // Optimal Approach
+    public static boolean isSorted(int arr[]) {
+        int count = 0;
+        int n = arr.length;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > arr[(i + 1) % n]) {
+                count++;
+            }
+        }
+
+        return count <= 1;
+    }
+
+    // Remove duplicates
+    public static void removeDuplicate(int nums[]){
+        int expextedNum[] = new int[nums.length];
+        int k = 1, p = 0;
+        
+        int i=0, j=i+1;
+
+        while (i < nums.length && j < nums.length) {
+            if(nums[i] == nums[j]){
+                j++;
+            }else{
+                k++;
+                expextedNum[p++] = nums[i];
+                i = j;
+                j++;
+            }
+        }
+
+        System.out.println(k);
+    }
 
     public static void main(String[] args) {
         int nums[] = { 2, 7, 11, 15 };

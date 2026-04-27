@@ -601,10 +601,107 @@ public class Medium {
         return ans;
     }
 
+    // 560. Subarray Sum Equals K
+    // Brute Force - map length - O(n^3)
+    public static int subarraySum(int[] nums, int k) {
+        int maxLen = 0;
+        for(int i=0; i<nums.length; i++){
+            for(int j=i; j<nums.length; j++){
+                int sum = 0;
+                for(int l=i; l<=j; l++){
+                    sum += nums[l];
+                }
+                if(sum == k){
+                    maxLen = Math.max(maxLen, j-i+1);
+                }
+            }
+        }
+
+        return maxLen;
+    }
+
+    // Brute Approach - count subArray of sum equal to k -> O(n^2)
+    public static int subarraySum2(int nums[], int k){
+        int count = 0;
+        for(int i=0; i<nums.length; i++){
+            int sum = 0;
+            for(int j=i; j<nums.length; j++){
+                sum += nums[j];
+                if(sum == k){
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    // Better Approach using Hashmap
+    public static int subarraySum3(int nums[], int k){
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        map.put(0, 1);
+        for(int i=0; i<nums.length; i++){
+            sum += nums[i];
+            if(map.containsKey(sum - k)){
+                map.containsKey(sum-k);
+            }
+        } 
+    }
+
+    // Rotate Array -> in right side k steps
+    // Optimal Approach -> O(n)
+    public static void rotateArr(int nums[], int k){
+        int n = nums.length;
+        if(n == 1) return;
+        k = k % n;
+        reverse(nums, 0, nums.length-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, nums.length-1);
+    }
+
+    public static void reverse(int nums[], int i, int j){
+        while (i < j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    // Brute force -> O(n*k)
+    public static void rotateArr2(int nums[], int k){
+        int n = nums.length;
+        k = k % n;
+        for(int i=0; i<k; i++){
+            int last = nums[n-1];
+            for(int j=n-1; j>0; j--){
+                nums[j] = nums[j-1];
+            }
+            nums[0] = last;
+        }
+    }
+
+    // Better Approach -> O(n) -> using space
+    public static void rotateArr3(int nums[], int k){
+        int n = nums.length;
+        k = k % n;
+        // using space
+        int rotated[] = new int[n];
+
+        for(int i=0; i<n; i++){
+            rotated[(i+k)%n] = nums[i];
+        }
+
+        for(int i=0; i<nums.length; i++){
+            nums[i] = rotated[i];
+        }
+    }
 
     public static void main(String[] args) {
-        int nums[] = { 2, 2, 1, 1, 1, 2, 2 };
-        System.out.println(majorityElement2(nums));
+        int nums[] = {1,2,1,2,1};
+        System.out.println(subarraySum2(nums, 3));
     }
 
     public static void printArr(int nums[]) {

@@ -14,16 +14,20 @@
 -   74.Search a 2D Matrix
 -   75.Sort Colors
 -   128.Longest Consecutive Sequence
+-   189.Rotate Array
 -   229.Majority Element II
 -   287.Find the Duplicate Number
+-   560.Subarray Sum Equals K
 -   912.Sort an Array (Merge Sort)
 -   3889.Mirror Frequency Distance
 ---
     -> Easy Level
 -   1.Two Sum
+-   26.Remove Duplicates from Sorted Array
 -   88.Merge Sorted Array
 -   118.Pascal's Triangle
 -   121.Best Time to Buy and Sell Stock
 -   136.Single Number
 -   169.Majority Element
 -   2965.Find Missing and Repeated Values
+-   1752.Check if Array Is Sorted and Rotated
