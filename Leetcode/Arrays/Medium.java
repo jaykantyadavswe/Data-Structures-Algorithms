@@ -646,7 +646,9 @@ public class Medium {
             if(map.containsKey(sum - k)){
                 map.containsKey(sum-k);
             }
-        } 
+        }
+        
+        return sum;
     }
 
     // Rotate Array -> in right side k steps
@@ -699,9 +701,32 @@ public class Medium {
         }
     }
 
+    // Rotate array by K elements in Left Side
+    // Brute Force - O(n * k)
+    public static void rotateLeftByK(int nums[], int k){
+        int n = nums.length;
+        for(int i=0; i<k; i++){
+            int temp = nums[0];
+            for(int j=0; j<n-1; j++){
+                nums[j] = nums[j+1];
+            }
+
+            nums[n-1] = temp;
+        }
+    }
+
+    // Optimal Approach
+    public static void rotateLeftByK2(int nums[], int k){
+        int n = nums.length;
+        reverse(nums, 0, k-1);
+        reverse(nums, k, n-1);
+        reverse(nums, 0, n-1);
+    }
+
     public static void main(String[] args) {
-        int nums[] = {1,2,1,2,1};
-        System.out.println(subarraySum2(nums, 3));
+        int nums[] = {1, 2, 3, 4, 5, 6};
+        rotateLeftByK2(nums, 2);
+        printArr(nums);
     }
 
     public static void printArr(int nums[]) {

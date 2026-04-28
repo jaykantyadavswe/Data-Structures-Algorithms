@@ -15,6 +15,7 @@
 -   75.Sort Colors
 -   128.Longest Consecutive Sequence
 -   189.Rotate Array
+-   Left Rotate Array by K Places
 -   229.Majority Element II
 -   287.Find the Duplicate Number
 -   560.Subarray Sum Equals K
@@ -31,3 +32,5 @@
 -   169.Majority Element
 -   2965.Find Missing and Repeated Values
 -   1752.Check if Array Is Sorted and Rotated
+-   Left Rotate Array by One
+-   283.Move Zeroes

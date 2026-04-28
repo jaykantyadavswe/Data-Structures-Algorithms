@@ -271,10 +271,12 @@ public class Easy {
                 return true;
             }
         }
+
+        return false;
     }
 
     // Optimal Approach
-    public static boolean isSorted(int arr[]) {
+    public static boolean isSorted2(int arr[]) {
         int count = 0;
         int n = arr.length;
 
@@ -308,11 +310,73 @@ public class Easy {
         System.out.println(k);
     }
 
+    // Left Rotate Array by One
+    public static void rotateByOne(int nums[]){
+        int n = nums.length;
+        int first = nums[0];
+        for(int i=0; i<n-1; i++){
+            nums[i] = nums[i+1];
+        }
+
+        nums[n-1] = first;
+    }
+
+    // 283. Move Zeroes
+    // Using Space - Brute Force
+    public static void moveZeroe(int nums[]){
+        int n = nums.length;
+        int temp[] = new int[n];
+        int lp = 0;
+        for(int rp=0; rp<n; rp++){
+            if(nums[rp] != 0){
+                temp[lp++] = nums[rp];
+            }
+        }
+
+        while (lp < n) {
+            nums[lp++] = 0;
+        }
+
+        for(int i=0; i<n; i++){
+            nums[i] = temp[i];
+        }
+    }
+
+    // Better Approach
+    public static void moveZeroes(int nums[]){
+        int n = nums.length;
+        if(n == 1) return;
+        
+        int lp = 0;
+        for(int rp=0; rp<n; rp++){
+            if(nums[rp] != 0){
+                int temp = nums[rp];
+                nums[rp] = nums[lp];
+                nums[lp] = temp;
+                lp++;
+            }
+        } 
+    }
+    
+    // Optimal Approach
+    public static void moveZeroes2(int nums[]){
+        int n = nums.length;
+        int lp = 0;
+        for(int rp=0; rp<n; rp++){
+            if(nums[rp] != 0){
+                nums[lp++] = nums[rp];
+            }
+        }
+
+        while (lp < n) {
+            nums[lp++] = 0;
+        }
+    }
+
     public static void main(String[] args) {
-        int nums[] = { 2, 7, 11, 15 };
-        int target = 9;
-        int ans[] = twoSum(nums, target);
-        printArr(ans);
+        int nums[] = {0,1,0,3,12};
+        moveZeroe(nums);
+        printArr(nums);
     }
 
     public static void printArr(int arr[]) {
