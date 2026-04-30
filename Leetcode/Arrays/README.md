@@ -34,3 +34,6 @@
 -   1752.Check if Array Is Sorted and Rotated
 -   Left Rotate Array by One
 -   283.Move Zeroes
+-   Union of two sorted arrays
+-   2956.Find Common Elements Between Two Arrays
+

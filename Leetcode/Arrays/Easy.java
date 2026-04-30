@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javax.lang.model.util.Elements;
 
 public class Easy {
     // 2965. Find Missing and Repeated Values
@@ -372,6 +376,150 @@ public class Easy {
             nums[lp++] = 0;
         }
     }
+
+    // Union of two sorted arrays
+    // Brute force
+    public static void findUnion(int nums1[], int n, int nums2[], int m) {
+        TreeMap<Integer, Integer> map = new TreeMap<>(); // sorted order
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            map.put(nums1[i], map.getOrDefault(nums1[i], 0) + 1);
+        }
+
+        for (int i = 0; i < m; i++) {
+            map.put(nums2[i], map.getOrDefault(nums2[i], 0) + 1);
+        }
+
+        for (Integer key : map.keySet()) {
+            list.add(key);
+        }
+
+        System.out.println(list);
+    }
+
+    // Better Approach
+    public static List<Integer> findUnion2(int nums1[], int n, int nums2[], int m) {
+        TreeSet<Integer> set = new TreeSet<>();
+
+        for (int num : nums1) {
+            set.add(num);
+        }
+
+        for (int num : nums2) {
+            set.add(num);
+        }
+
+        for (Integer key : set) {
+            System.out.println(key);
+        }
+
+        return new ArrayList<>(set);
+    }
+
+    // Two Pointer
+    public static void findUnion3(int nums1[], int n, int nums2[], int m) {
+        List<Integer> list = new ArrayList<>();
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i <= n - 1 && j <= m - 1) {
+            if (nums1[i] < nums2[j]) {
+                if (!list.contains(nums1[i])) {
+                    list.add(nums1[i]);
+                }
+                i++;
+            } else {
+                if (!list.contains(nums2[j])) {
+                    list.add(nums2[j]);
+                }
+                j++;
+            }
+        }
+
+        while (i <= n - 1) {
+            if (!list.contains(nums1[i])) {
+                list.add(nums1[i]);
+            }
+            i++;
+        }
+
+        while (j <= m - 1) {
+            if (!list.contains(nums2[j])) {
+                list.add(nums2[j]);
+            }
+            j++;
+        }
+
+        System.out.println(list);
+    }
+
+    // -   2956.Find Common Elements Between Two Arrays
+    public static void findIntersectionValues(int nums1[], int nums2[]) {
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+
+        for (int num : nums1) {
+            list1.add(num);
+        }
+
+        for (int num : nums2) {
+            list2.add(num);
+        }
+
+        int countNum1 = 0;
+        int countNum2 = 0;
+        for (int i = 0; i < nums1.length; i++) {
+            if (list2.contains(nums1[i])) {
+                countNum1++;
+            }
+        }
+
+        for (int i = 0; i < nums2.length; i++) {
+            if (list1.contains(nums2[i])) {
+                countNum2++;
+            }
+        }
+
+        System.out.println(countNum1 + ", " + countNum2);
+
+    }
+
+    // Using freq
+    public static void findIntersectionValues2(int nums1[], int nums2[]) {
+        int n = 0; // in nums1 largest number
+
+        for (int num : nums1) {
+            if (num > n) {
+                n = num;
+            }
+        }
+
+        // freq store
+        int freq1[] = new int[n + 1];
+        int freq2[] = new int[n + 1];
+
+        for (int num : nums1) {
+            freq1[num]++;
+        }
+
+        for (int num : nums2) {
+            if (num <= n) {
+                freq2[num]++;
+            }
+        }
+
+        int p = 0, q = 0;
+        for (int i = 0; i < freq1.length; i++) {
+            if (freq1[i] > 0 && freq2[i] > 0) {
+                p += freq1[i];
+                q += freq2[i];
+            }
+        }
+
+        System.out.println(p + ", " + q);
+    }
+
 
     public static void main(String[] args) {
         int nums[] = {0,1,0,3,12};
