@@ -1,15 +1,5 @@
 package DSA.Leetcode.Arrays;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import javax.lang.model.util.Elements;
+import java.util.*;
 
 public class Easy {
     // 2965. Find Missing and Repeated Values
@@ -518,6 +508,89 @@ public class Easy {
         }
 
         System.out.println(p + ", " + q);
+    }
+
+    // Length of the longest subarray with zero Sum
+    public static void longestsubArrOfzeroSum(int nums[], int k) {
+        int max = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == 0) {
+                    int length = j - i + 1;
+                    max = Math.max(max, length);
+                }
+            }
+        }
+
+        System.out.println(max);
+    }
+
+    // Optimal Approach
+    public static void longestsubArrOfzeroSum3(int nums[]) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int maxLen = 0;
+        int sum = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (sum == 0) {
+                maxLen = i + 1;
+            } else {
+                if (map.containsKey(sum)) {
+                    maxLen = Math.max(maxLen, i - map.get(sum));
+                } else {
+                    map.put(sum, i);
+                }
+            }
+        }
+
+        System.out.println(maxLen);
+    }
+
+    // Longest Subarray with given Sum K
+    // Brute Force
+    public static void longestsubArrOfzeroSum(int nums[], int k) {
+        int max = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j < nums.length; j++) {
+                sum += nums[j];
+                if (sum == k) {
+                    int length = j - i + 1;
+                    max = Math.max(max, length);
+                }
+            }
+        }
+
+        System.out.println(max);
+    }
+
+    // Optimal Approach
+    public static void longestsubArrOfzeroSum4(int nums[], int k){
+        int n = nums.length;
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int maxLen = 0;
+
+        int sum = 0;
+        for(int i=0; i<n; i++){
+            sum += nums[i];
+
+            if(sum == k){
+                maxLen = Math.max(maxLen, i+1);
+            }else if(map.containsKey(sum - k)){
+                maxLen = Math.max(maxLen, i - map.get(sum - k));
+            }else {
+                map.put(sum, i);
+            }
+        }
+
+        System.out.println("max length : " + maxLen);
     }
 
 

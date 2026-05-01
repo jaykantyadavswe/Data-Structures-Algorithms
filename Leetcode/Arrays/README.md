@@ -36,4 +36,7 @@
 -   283.Move Zeroes
 -   Union of two sorted arrays
 -   2956.Find Common Elements Between Two Arrays
+-   Length of the longest subarray with zero Sum
+-   Longest Subarray with given Sum K
+
 
