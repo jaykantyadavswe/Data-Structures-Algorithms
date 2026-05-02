@@ -723,10 +723,30 @@ public class Medium {
         reverse(nums, 0, n-1);
     }
 
+
+    // 2149. Rearrange Array Elements by Sign - O(n)
+    public static int[] reArrangeArray(int nums[]){
+        // Temp Array
+        int temp[] = new int[nums.length];
+        int posIdx = 0;
+        int negIdx = 1;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i] > 0){
+                temp[posIdx] = nums[i];
+                posIdx += 2;
+            }else{
+                temp[negIdx] = nums[i];
+                negIdx += 2;
+            }
+        }
+
+        return temp;
+    }
+
     public static void main(String[] args) {
-        int nums[] = {1, 2, 3, 4, 5, 6};
-        rotateLeftByK2(nums, 2);
-        printArr(nums);
+        int nums[] = {3,1,-2,-5,2,-4};
+        int temp[] = reArrangeArray(nums);
+        printArr(temp);
     }
 
     public static void printArr(int nums[]) {
