@@ -571,6 +571,38 @@ public class Medium {
         return longest;
     }
 
+    // Brute Force 
+    public static void longestConsecutive2(int nums[]){
+        int n = nums.length;
+        int maxConsecutive = 1;
+        
+        for(int i=0; i<n; i++){
+            int count = 1;
+            int x = nums[i];
+
+            while (linearSearch(nums, x+1) == true) {
+                x+=1;
+                count +=1;
+            }
+
+            maxConsecutive = Math.max(maxConsecutive, count);
+        }
+
+        System.out.println(maxConsecutive);
+    }
+
+    public static boolean linearSearch(int nums[], int ele){
+        int n = nums.length;
+
+        for(int i=0; i<n; i++){
+            if(nums[i] == ele){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // 3889. Mirror Frequency Distance
     public static int mirrorFrequency(String s) {
         //create freq array

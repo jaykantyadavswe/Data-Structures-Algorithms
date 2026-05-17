@@ -39,5 +39,11 @@
 -   2956.Find Common Elements Between Two Arrays
 -   Length of the longest subarray with zero Sum
 -   Longest Subarray with given Sum K
+-   Leaders in Arrays
+
+--- 
+    -> Binary Search
+-   33.Search in Rotated Sorted Array
+-   540.Single Element in a Sorted Array
 
 

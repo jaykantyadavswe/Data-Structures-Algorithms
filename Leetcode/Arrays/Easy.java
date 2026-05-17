@@ -593,6 +593,47 @@ public class Easy {
         System.out.println("max length : " + maxLen);
     }
 
+    // Leaders in Arrays
+    // Brute Force
+    public static void findLeaders(int nums[]){
+        int n = nums.length; 
+
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i=0; i<n; i++){
+            boolean isValid = true;
+            for(int j=i; j<n; j++){
+                if(nums[i] < nums[j]){
+                    isValid = false;
+                    continue;
+                }
+            }
+
+            if(isValid){
+                list.add(nums[i]);
+            }
+        }
+
+        System.out.println(list);
+    }
+
+    // Optimal Approach
+    public static void findLeaders2(int nums[]){
+        int n = nums.length;
+
+        ArrayList<Integer> list = new ArrayList<>();
+        int max = nums[n-1];
+        list.add(nums[n-1]); //right end of element always leader
+        for(int i=n-2; i>=0; i--){
+            if(nums[i] > max){
+                list.add(nums[i]);
+                max = nums[i];
+            }
+        }
+
+        Collections.reverse(list);
+
+        System.out.println(list);
+    }
 
     public static void main(String[] args) {
         int nums[] = {0,1,0,3,12};

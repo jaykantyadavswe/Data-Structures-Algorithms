@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;;
 
 public class medium {
     // 73. Set Matrix Zeroes, using -1 temporary marker
@@ -103,12 +101,14 @@ public class medium {
             }
         }
 
+        // Set Upper row 0 if true condition
         if (matrix[0][0] == 0) {
             for (int j = 0; j < m; j++) {
                 matrix[0][j] = 0;
             }
         }
 
+        // set first col 0 if true condition
         if (col0 == 0) {
             for (int i = 0; i < n; i++) {
                 matrix[i][0] = 0;
