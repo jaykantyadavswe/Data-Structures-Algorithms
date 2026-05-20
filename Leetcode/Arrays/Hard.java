@@ -49,9 +49,39 @@ public class Hard {
 
         return invCount;
     }
+
+    // 42. Trapping Rain Water - Using Two-Pointer
+    public static int trappingRainWater(int height[]){
+        int left = 0, right = height.length-1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+
+        while (left < right) {
+            if(height[left] < height[right]){
+                if(height[left] >= leftMax){
+                    leftMax = height[left];
+                }else{
+                    water += leftMax - height[left];
+                }
+
+                left++;
+            }else{
+                if(height[right] >= rightMax){
+                    rightMax = height[right];
+                }else{
+                    water += rightMax - height[right];
+                }
+                right--;
+            }
+        }
+
+        return water;
+    }
     public static void main(String[] args) {
         int arr[] = {6, 3, 5, 2, 7};
-        int ans = mergeSort(arr, 0, arr.length-1);
-        System.out.println(ans);
+        int height[] = {0,1,0,2,1,0,1,3,2,1,2,1};
+        System.out.println(trappingRainWater(height));
+        // int ans = mergeSort(arr, 0, arr.length-1);
+        // System.out.println(ans);
     }
 }

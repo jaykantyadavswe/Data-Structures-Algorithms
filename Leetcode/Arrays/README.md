@@ -1,6 +1,7 @@
 ## Arrays Questions on Leetcode
     -> High Level
 -   Count Inversion
+-   42.Trapping Rain Water
 
 
 
