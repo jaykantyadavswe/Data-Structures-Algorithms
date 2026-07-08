@@ -167,8 +167,8 @@ public class Medium {
         if(isFreqSame(freq, windFreq)) return true;
 
         for(int i=n1; i<n2; i++){
-            windFreq[s2.charAt(i) - 'a']++;
-            windFreq[s2.charAt(i - n1) - 'a']--;
+            windFreq[s2.charAt(i) - 'a']++; //add new freq
+            windFreq[s2.charAt(i - n1) - 'a']--; //delete old freq
 
             if(isFreqSame(freq, windFreq)){
                 return true;
