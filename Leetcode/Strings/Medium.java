@@ -309,6 +309,62 @@ public class Medium {
     }
 
     // 49. Group Anagrams
+    public static List<List<String>> groupAnagram(String strs[]){
+        Map<String, List<String>> ans = new HashMap<>();
+
+        for(String s : strs){
+            char ch[] = s.toCharArray();
+
+            Arrays.sort(ch);
+
+            String key = new String(ch);
+
+            if(!ans.containsKey(key)){
+                ans.put(key, new ArrayList<>());
+            }
+
+            ans.get(key).add(s);
+        }
+
+        return new ArrayList<>(ans.values());
+    }
+
+    // Without Sorting 
+    public static List<List<String>> groupAnagrams(String strs[]){
+        Map<String, List<String>> ans = new HashMap<>();
+
+        for(String s : strs){
+            String key = generate(s);
+
+            if(!ans.containsKey(key)){
+                ans.put(key, new ArrayList<>());
+            }
+
+            ans.get(key).add(s);
+        }
+
+        return new ArrayList<>(ans.values());
+    }
+
+    private static String generate(String word){
+        int count[] = new int[26];
+
+        for(int i=0; i<word.length(); i++){
+            count[word.charAt(i)-'a']++;
+        }
+        StringBuilder newWord = new StringBuilder();
+        for(int j=0; j<26; j++){
+            int freq = count[j];
+
+            if(freq > 0){
+                for(int i=0; i<freq; i++){
+                    newWord.append((char)(i - 'a'));
+                }
+            }
+        }
+
+        return newWord.toString();
+    }
     
 
     public static void main(String[] args) {
