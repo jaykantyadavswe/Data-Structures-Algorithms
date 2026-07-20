@@ -83,7 +83,27 @@ public class Recursions {
         }
     }
 
+    // Subsequences of a String
+    public static void isSubsequenceStr(String str, int i, StringBuilder curr, ArrayList<String> ans){
+        if(i >= str.length()){
+            String subSequence = curr.toString();
+            ans.add(subSequence);
+            return;
+        }
+
+        // Include
+        curr.append(str.charAt(i));
+        isSubsequenceStr(str, i+1, curr, ans);
+        // Exclude
+        curr.deleteCharAt(curr.length()-1);
+        isSubsequenceStr(str, i+1, curr, ans);
+    }
+
     public static void main(String[] args) {
-        System.out.println(numberToWords(5976543));
+        // System.out.println(numberToWords(5976543));
+        ArrayList<String> ans = new ArrayList<>();
+        StringBuilder curr = new StringBuilder("");
+        isSubsequenceStr("abc", 0, curr, ans);
+        System.out.println(ans);
     }
 }
