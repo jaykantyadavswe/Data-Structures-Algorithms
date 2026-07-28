@@ -1,4 +1,4 @@
-package DSA.Leetcode.Recursion;
+package Leetcode.Recursion;
 
 import java.util.*;
 
@@ -99,11 +99,30 @@ public class Recursions {
         isSubsequenceStr(str, i+1, curr, ans);
     }
 
+    // 198. House Robber
+    public static int Rob(int nums[], int idx){
+        // Base Case
+        if(idx >= nums.length) return 0;
+
+        // Include
+        int inc = nums[idx] + Rob(nums, idx + 2);
+        // Exclude
+        int Exc = 0 + Rob(nums, idx + 1);
+
+        // Max Money
+        int maxMoneyRob = Math.max(inc, Exc);
+
+        return maxMoneyRob;
+    }
+
     public static void main(String[] args) {
         // System.out.println(numberToWords(5976543));
-        ArrayList<String> ans = new ArrayList<>();
+        /* ArrayList<String> ans = new ArrayList<>();
         StringBuilder curr = new StringBuilder("");
         isSubsequenceStr("abc", 0, curr, ans);
-        System.out.println(ans);
+        System.out.println(ans); */
+
+        int nums[] = {2,7,9,3,1};
+        System.out.println(Rob(nums, 0));
     }
 }
