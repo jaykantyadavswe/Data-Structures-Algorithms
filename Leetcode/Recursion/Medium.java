@@ -111,9 +111,59 @@ public class Medium {
         }
     }
 
+    // 518. Coin Change II -> Include & Exclude Pattern
+    public static int coinChangeII(int amount, int coins[], int idx){
+        if(amount == 0){
+            return 1;
+        }
+
+        if(amount < 0){
+            return 0;
+        }
+
+        if(idx >= coins.length){
+            return 0;
+        }
+
+        return coinChangeII(amount - coins[idx], coins, idx) + coinChangeII(amount, coins, idx + 1);
+    }
+
+    // 322. Coin Change
+    public static int coinChange(int amount, int coins[]){
+        if(amount == 0) return 0;
+        if(amount < 0) return Integer.MAX_VALUE;
+        int mini = Integer.MAX_VALUE;
+
+        for(int coin: coins){
+            int recursionANS = coinChange(amount - coin, coins);
+
+            if(recursionANS != Integer.MAX_VALUE){
+                int totalCoinsUsed = recursionANS + 1;
+                mini = Math.min(mini, totalCoinsUsed);
+            }
+        }
+
+        return mini;
+    }
+
     public static void main(String[] args) {
-        int arr[] = { 2,3,6,7 };
+        /* int arr[] = { 2,3,6,7 };
         int tar = 7;
-        System.out.println(combinationSum2(arr, tar));
+        System.out.println(combinationSum2(arr, tar)); */
+
+        /* int amount = 5;
+        int coins[] = {1, 2, 5};
+
+        System.out.println(coinChangeII(amount, coins, 0)); */
+
+        int amount = 11;
+        int coins[] = {1, 2, 5};
+
+        int ans = coinChange(amount, coins);
+        if(ans == Integer.MAX_VALUE){
+            System.out.println(-1);
+        }else{
+            System.out.println(ans);
+        }
     }
 }
