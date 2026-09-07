@@ -120,13 +120,98 @@ class slidingWindow {
 
         return nums.length - left;
     }
+
+    // 713. Subarray Product Less Than K
+    public static int numSubarrayProductLessThanK(int nums[], int k){
+        int countSubArrProduct = 0;
+
+        for(int i=0; i<nums.length; i++){
+            int product = 1;
+            for(int j=i; j>=0; j--){
+                product *= nums[j];
+                if(product < k) {countSubArrProduct++;}
+                else{
+                    break;
+                }
+            }
+        }
+
+        return countSubArrProduct;
+    }
+
+    // Optimal Appraoch
+    public static int numSubarrayProductLessThanK2(int nums[], int k){
+        if(k <= 1) return 0;
+
+        int count = 0;
+        int product = 1;
+        int left = 0;
+
+        for(int right = 0; right < nums.length; right++){
+            product *= nums[right];
+
+            while (product >= k) {
+                product /= nums[left];
+                left++;
+            }
+
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+
+    // 209. Minimum Size Subarray Sum
+    public static int minSubArrayLen(int nums[], int tar){
+        int length = Integer.MAX_VALUE;
+        for(int i=0; i<nums.length; i++){
+            int sum = 0;
+            for(int j=i; j<nums.length; j++){
+                sum += nums[j];
+                if(sum >= tar){
+                    length = Math.min(length, j - i + 1);
+                    break;
+                }
+            }
+        }
+
+        return length == Integer.MAX_VALUE ? 0 : length;
+    }
+
+    // Optimal Approach
+    public static int minSubArrayLen2(int nums[], int tar){
+        int minLen = Integer.MAX_VALUE;
+        int sum = 0;
+        int left = 0;
+        
+        for(int right = 0; right<nums.length; right++){
+            sum += nums[right];
+
+            while (sum >= tar) {
+                minLen = Math.min(minLen, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+
+        }
+
+        return minLen;
+    }
     public static void main(String args[]){
         /* int nums[] = {1, 4, 2, 10, 23, 3, 1, 0, 20};
         System.out.println(maxSumSubArr(nums, 4));
         System.out.println(maxSumSubArr2(nums, 4)); */
 
         // int nums[] = {1, 1, 0, 1, 1, 1};
-        int nums[] = {1,1,1,0,0,0,1,1,1,1,0};
-        System.out.println(longestOnesIII(nums, 2));
+        /* int nums[] = {1,1,1,0,0,0,1,1,1,1,0};
+        System.out.println(longestOnesIII(nums, 2)); */
+
+        /* int nums[] = {10, 5, 2, 6};
+        int k = 100;
+        System.out.println(numSubarrayProductLessThanK2(nums, k)); */
+
+        int nums[] = {1, 4, 4};
+        int tar = 4;
+        System.out.println(minSubArrayLen2(nums, tar));
     }
 }
