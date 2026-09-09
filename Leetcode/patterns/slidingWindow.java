@@ -1,3 +1,5 @@
+import java.util.*;
+
 class slidingWindow {
     // Max sum subArray of size k
     // Brute force
@@ -197,6 +199,48 @@ class slidingWindow {
 
         return minLen;
     }
+
+    // Fruits into basket
+    // Brute force - O(n^2)
+    public static int totalFruit(int [] fruits){
+        int ans = 0;
+        for(int l = 0; l < fruits.length; l++){
+            HashMap<Integer, Integer> map = new HashMap<>();
+            int count = 0;
+            for(int r = l; r<fruits.length; r++){
+                map.put(fruits[r], map.getOrDefault(fruits[r], 0) + 1);
+                if(map.size() > 2){
+                    break;
+                }
+                count++;
+            }
+            ans = Math.max(ans, count);
+        }
+
+        return ans;
+    }
+
+    // Optimal - Sliding window
+    public static int totalFruit2(int [] fruits){
+        int ans = 0;
+        int left = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int right = 0; right<fruits.length; right++){
+            map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
+
+            while (map.size() > 2) {
+                map.put(fruits[left], map.get(fruits[left]) - 1);
+                if(map.get(fruits[left]) == 0){
+                    map.remove(fruits[left]);
+                }
+                left++;
+            }
+
+            ans = Math.max(ans, right - left + 1);
+        }
+
+        return ans;
+    }
     public static void main(String args[]){
         /* int nums[] = {1, 4, 2, 10, 23, 3, 1, 0, 20};
         System.out.println(maxSumSubArr(nums, 4));
@@ -210,8 +254,11 @@ class slidingWindow {
         int k = 100;
         System.out.println(numSubarrayProductLessThanK2(nums, k)); */
 
-        int nums[] = {1, 4, 4};
+        /* int nums[] = {1, 4, 4};
         int tar = 4;
-        System.out.println(minSubArrayLen2(nums, tar));
+        System.out.println(minSubArrayLen2(nums, tar)); */
+
+        int fruits[] = {0, 1, 2, 2};
+        System.out.println(totalFruit2(fruits));
     }
 }
