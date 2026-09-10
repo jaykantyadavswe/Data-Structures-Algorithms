@@ -202,44 +202,108 @@ class slidingWindow {
 
     // Fruits into basket
     // Brute force - O(n^2)
-    public static int totalFruit(int [] fruits){
-        int ans = 0;
-        for(int l = 0; l < fruits.length; l++){
-            HashMap<Integer, Integer> map = new HashMap<>();
-            int count = 0;
-            for(int r = l; r<fruits.length; r++){
-                map.put(fruits[r], map.getOrDefault(fruits[r], 0) + 1);
-                if(map.size() > 2){
+    public static int totalFruit(int fruits[]){
+        int maxNumOfFruit = 0;
+
+        for(int left = 0; left < fruits.length; left++){
+            HashMap<Integer, Integer> basket = new HashMap<>();
+            int fruit = 0;
+
+            for(int right = left; right < fruits.length; right++){
+                basket.put(fruits[right], basket.getOrDefault(fruits[right], 0) + 1);
+
+                if(basket.size() > 2){
                     break;
                 }
-                count++;
+                fruit++;
             }
-            ans = Math.max(ans, count);
+
+            maxNumOfFruit = Math.max(maxNumOfFruit, fruit);
         }
 
-        return ans;
+        return maxNumOfFruit;
     }
 
-    // Optimal - Sliding window
-    public static int totalFruit2(int [] fruits){
-        int ans = 0;
+    // Optimal - Sliding Window
+    public static int totalFruit3(int fruits[]){
+        int maxNumOfFruit = 0;
         int left = 0;
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for(int right = 0; right<fruits.length; right++){
-            map.put(fruits[right], map.getOrDefault(fruits[right], 0) + 1);
 
-            while (map.size() > 2) {
-                map.put(fruits[left], map.get(fruits[left]) - 1);
-                if(map.get(fruits[left]) == 0){
-                    map.remove(fruits[left]);
+        HashMap<Integer, Integer> Basket = new HashMap<>();
+        for(int right = 0; right < fruits.length; right++){
+            Basket.put(fruits[right], Basket.getOrDefault(fruits[right], 0) + 1);
+
+            while (Basket.size() > 2) {
+                Basket.put(fruits[left], Basket.get(fruits[left]) - 1);
+                if(Basket.get(fruits[left]) == 0){
+                    Basket.remove(fruits[left]);
                 }
                 left++;
             }
 
-            ans = Math.max(ans, right - left + 1);
+            maxNumOfFruit = Math.max(maxNumOfFruit, right - left + 1);
         }
 
-        return ans;
+        return maxNumOfFruit;
+    }
+
+    // Subarrays with K Different Integers
+    // Brute force - O(n^2)
+    public static int subarraysWithKDistinct(int nums[], int k){
+        int count = 0;
+        for(int left = 0; left < nums.length; left++){
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for(int right = left; right < nums.length; right++){
+                map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+
+                if(map.size() == k){
+                    count++;
+                }else if(map.size() > k) break;
+            }
+        }
+
+        return count;
+    }
+
+    // Sliding window - O(n)
+    public static int subarraysWithKDistinct2(int nums[], int k){
+        int count = 0;
+        int left = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int right = left; right < nums.length; right++){
+            map.put(nums[right], map.getOrDefault(nums[right], 0) + 1);
+
+            while (map.size() > k) {
+                map.put(nums[left], map.get(nums[left]) - 1);
+                if(map.get(nums[left]) == 0){
+                    map.remove(nums[left]);
+                }
+
+                left++;
+            }
+
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+
+    // 239. Sliding Window Maximum
+    // brute force
+    public static int[] maxSlidingWindow(int nums[], int k){
+        int n = nums.length;
+        int res[] = new int[n - k + 1];
+
+        for(int i = 0; i <= n - k; i++){
+            int max = nums[i];
+            for(int j = i; j < i + k; j++){
+                max = Math.max(max, nums[j]);
+            }
+
+            res[i] = max;
+        }
+
+        return res;
     }
     public static void main(String args[]){
         /* int nums[] = {1, 4, 2, 10, 23, 3, 1, 0, 20};
@@ -258,7 +322,23 @@ class slidingWindow {
         int tar = 4;
         System.out.println(minSubArrayLen2(nums, tar)); */
 
-        int fruits[] = {0, 1, 2, 2};
-        System.out.println(totalFruit2(fruits));
+        /* int fruits[] = {0, 1, 2, 2};
+        System.out.println(totalFruit3(fruits)); */
+
+        /* int nums[] = {1,2,1,2,3};
+        int k = 2;
+        System.out.println(subarraysWithKDistinct2(nums, k) - subarraysWithKDistinct2(nums, k-1)); */
+
+        int nums[] = {1,3,-1,-3,5,3,6,7};
+        int k = 3;
+        int ans[] = maxSlidingWindow(nums, k);
+        printArr(ans);
+    }
+
+    public static void printArr(int nums[]){
+        for(int i=0; i<nums.length; i++){
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println();
     }
 }
