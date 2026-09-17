@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class prefixSum {
     // 560. Subarray Sum Equals K
@@ -66,6 +66,112 @@ public class prefixSum {
         return count;
     }
 
+    //1314. Matrix Block Sum
+    public static int[][] matrixBlockSum(int mat[][], int k){
+        int m = mat.length;
+        int n = mat[0].length;
+
+        int ans[][] = new int[m][n];
+
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                int sum = 0;
+
+                for(int r = i - k; r <= i + k; r++){
+                    for(int c = j - k; c <= j + k; c++){
+
+                        if(r >= 0 && r < m && c >= 0 && c < n){
+                            sum += mat[r][c];
+                        }
+                    }
+                }
+
+                ans[i][j] = sum;
+            }
+        }
+
+        return ans;
+    }
+
+    // Optimal Approach
+    public static int[][] matrixBlockSum2(int [][] mat, int k){
+        int m = mat.length;
+        int n = mat[0].length;
+
+        int [][] prefix = new int[m + 1][n + 1];
+
+        for(int i = 1; i<=m; i++){
+            for(int j = 1; j<=n; j++){
+                prefix[i][j] = mat[i - 1][j - 1] + prefix[i - 1][j] + prefix[i][j-1] - prefix[i-1][j-1];
+            }
+        }
+
+        int [][] ans = new int[m][n];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+
+                int r1 = Math.max(0, i - k);
+                int c1 = Math.max(0, j - k);
+                int r2 = Math.min(m - 1, i + k);
+                int c2 = Math.min(n - 1, j + k);
+
+                r1++;
+                c1++;
+                r2++;
+                c2++;
+
+                ans[i][j] = prefix[r2][c2]
+                          - prefix[r1 - 1][c2]
+                          - prefix[r2][c1-1]
+                          + prefix[r1 - 1][c1 - 1];
+            }
+        }
+
+        return ans;
+    }
+
+    // 238. Product of Array Except Self - O(n^2)
+    public static int[] productExceptSelf(int nums[]){
+        int res[] = new int[nums.length];
+
+        for(int i=0; i<nums.length; i++){
+            int prod = 1;
+            for(int j=0; j<nums.length; j++){
+                if(i == j){
+                    continue;
+                }else{
+                    prod *= nums[j];
+                }
+            }
+
+            res[i] = prod;
+        }
+
+        return res;
+    }
+
+    // Optimal Approach
+    public static int[] productExceptSelf2(int nums[]){
+        int n = nums.length;
+
+        int res[] = new int[n];
+        res[0] = 1;
+        // Left
+        for(int i=1; i<nums.length; i++){
+            res[i] = res[i-1] * nums[i-1];
+        }
+
+        // Right
+        int rightProd = 1;
+        for(int r=n-1; r>=0; r--){
+            res[r] = res[r] * rightProd;
+            rightProd *= nums[r];
+        }
+
+        return res;
+    }
+    
+
     public static void main(String[] args) {
         /*
          * int nums[] = {1,2,3};
@@ -73,8 +179,19 @@ public class prefixSum {
          * System.out.println(subArraySum(nums, k));
          */
 
-        int nums[] = { 4, 5, 0, -2, -3, 1 };
+        /* int nums[] = { 4, 5, 0, -2, -3, 1 };
         int k = 5;
-        System.out.println(subarraysDivByK2(nums, k));
+        System.out.println(subarraysDivByK2(nums, k)); */
+
+        int nums[] = {1,2,3,4};
+        int ans[] = productExceptSelf2(nums);
+        printArr(ans);
+    }
+
+    public static void printArr(int nums[]){
+        for(int i=0; i<nums.length; i++){
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println();
     }
 }
