@@ -212,6 +212,61 @@ public class prefixSum {
         return false;
     }
 
+    // 724. Find Pivot Index
+    // Brute Force
+    public static int pivotIndex(int nums[]){
+        int n = nums.length;
+        for(int i=0; i<n; i++){
+
+            int leftSum = 0;
+            for(int j=0; j<i; j++){
+                leftSum += nums[j];
+            }
+
+            System.out.println("LeftSum : " + leftSum);
+
+            int rightSum = 0;
+            for(int j=i+1; j<n; j++){
+                rightSum += nums[j];
+            }
+
+            System.out.println("RightSum: " + rightSum);
+
+            if(leftSum == rightSum){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    // Optimal Approach
+    public static int pivotIndex2(int nums[]){
+        int n = nums.length;
+
+        int totalSum = 0;
+        for(int num : nums){
+            totalSum += num;
+        }
+
+        System.out.println("Total Sum : " + totalSum);
+        int leftSum = 0;
+        for(int i=0; i<n; i++){
+            int rightSum = totalSum - leftSum - nums[i];
+
+            System.out.println("RightSum : " + rightSum);
+            System.out.println("Leftsum : " + leftSum);
+
+            if(leftSum == rightSum){
+                return i;
+            }
+
+            leftSum += nums[i];
+        }
+
+        return -1;
+    }
+
     public static void main(String[] args) {
         /*
          * int nums[] = {1,2,3};
@@ -227,9 +282,12 @@ public class prefixSum {
         int ans[] = productExceptSelf2(nums);
         printArr(ans); */
 
-        int nums[] = {23,2,4,6,7};
+        /* int nums[] = {23,2,4,6,7};
         int k = 6;
-        System.out.println(checkSubarraySum2(nums, k));
+        System.out.println(checkSubarraySum2(nums, k)); */
+
+        int nums[] = {1,7,3,6,5,6};
+        System.out.println(pivotIndex2(nums));
     }
 
     public static void printArr(int nums[]){
