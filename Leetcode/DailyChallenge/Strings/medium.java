@@ -1,6 +1,7 @@
 package Leetcode.DailyChallenge.Strings;
 
 public class medium {
+    // 3517. Smallest Palindromic Rearrangement I
     // Approach - I
     public static void smallestPalindrome(String s) {
         int freq[] = new int[26];
@@ -67,6 +68,8 @@ public class medium {
 
     public static void main(String[] args) {
         String s = "babab";
+        String v = "BsssBddmsm"
         smallestPalindrome2(s);
+        
     }
 }
