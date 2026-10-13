@@ -37,8 +37,101 @@ public class easy {
         System.out.println((max1 - 1) * (max2 - 1));
     }
 
+    // 50. Pow(x, n)
+    // Approach - 1
+    public static double myPow(double x, int n){
+        return Math.pow(x, n);
+    }
+
+    // Using Recursion
+    public static double myPow2(double x, int n){
+        // test case
+        if(n == 0) return 1;
+
+        double halfPowSq = myPow2(x, n/2) * myPow2(x, n/2);
+
+        if(n % 2 != 0){
+            return x * halfPowSq;
+        }
+
+        return halfPowSq;
+    }
+
+    public static double myPow3(double x, int n){
+        if(n == 0) return 1;
+
+        double halfPow = myPow3(x, n/2);
+        double halfPowSq = halfPow * halfPow;
+
+        if(n % 2 != 0){
+            return x * halfPowSq;
+        }
+
+        return halfPowSq;
+    }
+
+    public static double myPow4(double x, int n){
+        long exp = n;
+
+        // if n is negative number
+        if(exp < 0){
+            x = 1 / x;
+            exp = -exp;
+        }
+
+        double ans = 1;
+
+        while (exp > 0) {
+            if(exp%2 != 0){
+                ans *= x;
+            }
+
+            x *= x;
+
+            exp /= 2;
+        }
+
+        return ans;
+    }
+
+    // Optimal Approach
+    public static double myPow5(double x, int n){
+        if(n == 0) return 1.0;
+        if(x == 0) return 0.0;
+        if(x == 1) return 1.0;
+        if(x == -1 && n % 2 == 0) return 1.0; 
+        if(x == -1 && n % 2 != 0) return -1.0;
+
+        long binForm = n;
+        if(n < 0){
+            x = 1/x;
+            binForm = -binForm;
+        }
+
+        double ans = 1;
+
+        while (binForm > 0) {
+            if(binForm % 2 == 1){
+                ans *= x;
+            }
+
+            binForm /= 2;
+
+            if(binForm > 0){
+                x *= x;
+            }
+        }
+
+        return ans;
+    }
+
     public static void main(String[] args) {
-        int nums[] = {3,4,5,2};
-        maxProduct3(nums);
+        /* int nums[] = {3,4,5,2};
+        maxProduct3(nums); */
+
+        System.out.println(myPow(2.0000, 10));
+        System.out.println(myPow2(2.0000, 10));
+        System.out.println(myPow3(2.0000, 5));
+        System.out.println(myPow4(2.0000, 10));
     }
 }
