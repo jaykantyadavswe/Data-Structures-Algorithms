@@ -298,6 +298,116 @@ public class Easy {
         return ans;
     }
 
+    // 73. Set Matrix Zeroes - O(n^3)
+    public static void setZeroes(int matrix[][]){
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        // Mark rows and columns containing original zeros
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(matrix[i][j] == 0){
+                    markRow(matrix, i);
+                    markCol(matrix, j);
+                }
+            }
+        }
+
+        // Convert markers to zero
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j] == -1){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    private static void markRow(int matrix[][], int rows){
+        for(int j=0; j<matrix[0].length; j++){
+            if(matrix[rows][j] != 0){
+                matrix[rows][j] = -1;
+            }
+        }
+    }
+
+    private static void markCol(int matrix[][], int cols){
+        for(int i=0; i<matrix.length; i++){
+            if(matrix[i][cols] != 0){
+                matrix[i][cols] = -1;
+            }
+        }
+    }
+
+    // Better Approach - O(2 * (m * n))
+    public static void setZeroes2(int matrix[][]){
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        int[] row = new int[rows];
+        int[] col = new int[cols];
+
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(matrix[i][j] == 0){
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        
+        
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                if(row[i] == 1 || col[j] == 1){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    // Optimal Solution
+    public static void setZeroes3(int matrix[][]){
+        int col0 = 1; // 1st col for
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j] == 0){
+                    matrix[0][i] = 0;
+
+                    if(j != 0){ //skip 1st col
+                        matrix[0][j] = 0;
+                    }else{
+                        col0 = 0;
+                    }
+                }
+            }
+        }
+
+        // Hash col & row : anyone have in 0 then row & col completely zero except 1st row and 1st col
+        for(int i=1; i<matrix.length; i++){
+            for(int j=1; j<matrix[0].length; j++){
+                if(matrix[i][j] != 0){
+                    if(matrix[0][j] == 0 || matrix[i][0] == 0){
+                        matrix[i][j] = 0;
+                    }
+                }
+            }
+        }
+
+        // 1st col set zero
+        if(matrix[0][0] == 0){
+            for(int j=0; j<matrix.length; j++){
+                matrix[0][j] = 0;
+            }
+        }
+
+        // 1st row set zero
+        if(col0 == 0){
+            for(int i=0; i<matrix.length; i++){
+                matrix[i][0] = 0;
+            }
+        }
+    }
     public static void main(String[] args) {
         /*
          * int nums[] = {3,4,5,2};
@@ -322,9 +432,23 @@ public class Easy {
         /* int height[] = {1, 8, 6, 2, 5, 4, 8, 3, 7};
         System.out.println(maxWater(height)); */
 
-        int nums[] = {1, 2, 3, 4};
+        /* int nums[] = {1, 2, 3, 4};
         int res[] = productExceptSelf3(nums);
-        printArr(res);
+        printArr(res); */
+
+        int matrix[][] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+        // int matrix[][] = {{0, 1}};
+        setZeroes2(matrix);
+        printAr(matrix);
+    }
+
+    public static void printAr(int matrix[][]){
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public static void printArr(int nums[]){
