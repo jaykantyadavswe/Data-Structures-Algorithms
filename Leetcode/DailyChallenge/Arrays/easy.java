@@ -408,6 +408,58 @@ public class Easy {
             }
         }
     }
+
+    // 287. Find the Duplicate Number
+    // Brute force -> Using Spacew
+    public static int findDuplicate(int nums[]){
+        HashSet<Integer> set = new HashSet<>();
+        
+        for(int i=0; i<nums.length; i++){
+            if(set.contains(nums[i])){
+                return nums[i];
+            }
+
+            set.add(nums[i]);
+        }
+
+        return -1;
+    }
+
+    // Optimize solution - O(n) -> Fast & Slow Pointer Approach
+    public static int findDuplicate2(int nums[]){
+        int slow = nums[0];
+        int fast = nums[0];
+
+        do{
+            slow = nums[slow]; //+1
+            fast = nums[nums[fast]]; //+2
+        }while(slow != fast);
+
+        slow = nums[0];
+        while (slow != fast) {
+            slow = nums[slow]; //+1
+            fast = nums[fast]; //+1
+        }
+
+        return slow;
+    }
+
+    // 74. Search a 2D Matrix
+    public static boolean searchMatrix(int matrix[][], int target){
+        int row = matrix.length;
+        int col = matrix[0].length;
+
+        int start = 0;
+        int end = row * col -1;
+
+        
+
+        while (start <= end) {
+            int mid = st + (end - 1) / 2;
+
+            if(matrix[mid])
+        }
+    }
     public static void main(String[] args) {
         /*
          * int nums[] = {3,4,5,2};
@@ -436,10 +488,13 @@ public class Easy {
         int res[] = productExceptSelf3(nums);
         printArr(res); */
 
-        int matrix[][] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
-        // int matrix[][] = {{0, 1}};
+        /* int matrix[][] = {{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
+        int matrix[][] = {{0, 1}};
         setZeroes2(matrix);
-        printAr(matrix);
+        printAr(matrix); */
+
+        int nums[] = {1, 3, 4, 2, 2};
+        System.out.println(findDuplicate2(nums));
     }
 
     public static void printAr(int matrix[][]){
